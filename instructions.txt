@@ -1,0 +1,8 @@
+开始训练  
+python main.py ctdet --exp_id coco_dla --batch_size 4 --master_batch 1 --lr 1.25e-4  --gpus 0
+继续训练
+python main.py --resume ctdet --exp_id coco_dla --batch_size 4 --master_batch 1 --lr 1.25e-4  --gpus 0
+测试
+python test.py --exp_id coco_dla --not_prefetch_test ctdet --load_model ../exp/ctdet/coco_dla/model_best.pth
+跑demo
+python demo.py ctdet --demo /home/CenterNet/images/ --load_model ../models/ctdet_coco_dla_2x.pth
