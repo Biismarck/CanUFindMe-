@@ -40,10 +40,6 @@ class CTDetDataset(data.Dataset):
         img1 = cv2.imread(img_path)
         img2 = cv2.imread(newpath)
 
-        # 两图相减
-        # img = cv2.absdiff(img1, img2)
-        # 两张图叠成6通道
-        # img = np.dstack((img1, img2))
         height, width = img1.shape[0], img1.shape[1]
 
         c = np.array([img1.shape[1] / 2., img1.shape[0] / 2.], dtype=np.float32)
@@ -142,7 +138,7 @@ class CTDetDataset(data.Dataset):
                 gt_det.append([ct[0] - w / 2, ct[1] - h / 2,
                                ct[0] + w / 2, ct[1] + h / 2, 1, cls_id])
         # 将处理后的两张图叠成六通道
-        inp = np.vstack((inp1,inp2))
+        inp = np.vstack((inp1, inp2))
         ret = {'input': inp, 'hm': hm, 'reg_mask': reg_mask, 'ind': ind, 'wh': wh}
         if self.opt.dense_wh:
             hm_a = hm.max(axis=0, keepdims=True)

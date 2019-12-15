@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import os
 import cv2
 import numpy as np
 from progress.bar import Bar
@@ -76,7 +77,7 @@ class BaseDetector(object):
   def debug(self, debugger, images, dets, output, scale=1):
     raise NotImplementedError
 
-  def show_results(self, debugger, image, results):
+  def show_results(self, debugger, image, imagename, results):
    raise NotImplementedError
 
   def run(self, image_or_path_or_tensor, meta=None):
@@ -89,9 +90,11 @@ class BaseDetector(object):
     if isinstance(image_or_path_or_tensor, np.ndarray):
       image = image_or_path_or_tensor
     elif type(image_or_path_or_tensor) == type (''):
-      img2path=image_or_path_or_tensor.rstrip('.jpg')+'_A.jpg'
+      img2path = image_or_path_or_tensor.rstrip('.jpg')+'_A.jpg'
       image = cv2.imread(image_or_path_or_tensor)
-      image2=cv2.imread(img2path)
+      imagename = os.path.basename(image_or_path_or_tensor)  # 获取图片名
+      imagename = imagename.rsplit('.jpg')[0]
+      image2 = cv2.imread(img2path)
     else:
       image = image_or_path_or_tensor['image'][0].numpy()
       pre_processed_images = image_or_path_or_tensor
@@ -144,7 +147,7 @@ class BaseDetector(object):
     tot_time += end_time - start_time
 
     if self.opt.debug >= 1:
-      self.show_results(debugger, image, results)
+      self.show_results(debugger, image, imagename, results)
     
     return {'results': results, 'tot': tot_time, 'load': load_time,
             'pre': pre_time, 'net': net_time, 'dec': dec_time,
