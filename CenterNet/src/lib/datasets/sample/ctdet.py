@@ -35,7 +35,11 @@ class CTDetDataset(data.Dataset):
         anns = self.coco.loadAnns(ids=ann_ids)
         num_objs = min(len(anns), self.max_objs)
 
-        newpath = os.path.join(self.img_dir, file_name[:6] + '_A.jpg')
+        pos = file_name.rfind('.')
+        list_i = list(file_name)  # str -> list
+        list_i.insert(pos, '_A')
+        newname = ''.join(list_i)  # list -> str
+        newpath = os.path.join(self.img_dir, newname)
 
         img1 = cv2.imread(img_path)
         img2 = cv2.imread(newpath)

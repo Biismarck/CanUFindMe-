@@ -55,7 +55,7 @@ def prefetch_test(opt):
     Logger(opt)
     Detector = detector_factory[opt.task]
 
-    split = 'val' if not opt.trainval else 'test'
+    split = 'val' if opt.trainval else 'test'
     dataset = Dataset(opt, split)
     detector = Detector(opt)
 
@@ -92,7 +92,7 @@ def test(opt):
     opt.debug = max(opt.debug, 1)
     Detector = detector_factory[opt.task]
 
-    split = 'val' if not opt.trainval else 'test'
+    split = 'val' if opt.trainval else 'test'
     dataset = Dataset(opt, split)
     detector = Detector(opt)
 
