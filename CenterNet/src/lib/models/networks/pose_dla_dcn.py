@@ -222,7 +222,7 @@ class Tree(nn.Module):
 
 
 class DLA(nn.Module):
-    def __init__(self, levels, channels, num_classes=1000,
+    def __init__(self, levels, channels, num_classes=1,
                  block=BasicBlock, residual_root=False, linear_root=False):
         super(DLA, self).__init__()
         self.channels = channels

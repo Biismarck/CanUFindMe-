@@ -100,4 +100,4 @@ class CtdetDetector(BaseDetector):
         file = open(resultpath +'\\'+ imagename +'.txt', 'w')
         file.write(msg)
         #debugger.show_all_imgs(pause=self.pause)
-        debugger.save_all_imgs(path=resultpath, genID=False)
+        debugger.save_all_imgs(path=resultpath, prefix=imagename, genID=False)
