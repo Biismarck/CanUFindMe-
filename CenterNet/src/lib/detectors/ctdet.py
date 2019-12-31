@@ -91,12 +91,31 @@ class CtdetDetector(BaseDetector):
     def show_results(self, debugger, image, imagename, results):
         debugger.add_img(image, img_id='ctdet')
         resultpath='..\data\\testdata\\result'
+        height = image.shape[0]
+        width = image.shape[1]
+
         for j in range(1, self.num_classes + 1):
             msg = ''
             for bbox in results[j]:
                 if bbox[4] > self.opt.vis_thresh:
                     debugger.add_coco_bbox(bbox[:4], j - 1, bbox[4], img_id='ctdet')
-                    msg=msg + 'True 1 ' + str(bbox[0]) +' '+ str(bbox[1]) +' '+ str(bbox[2]) +' '+ str(bbox[3])+'\n'
+                    if(bbox[0]>0):
+                        left = bbox[0]
+                    else:
+                        left = 0
+                    if(bbox[1]>0):
+                        bottom = bbox[1]
+                    else:
+                        bottom = 0
+                    if(bbox[2]<width):
+                        right = bbox[2]
+                    else:
+                        right = width
+                    if(bbox[3]<height):
+                        top = bbox[3]
+                    else:
+                        top = height
+                    msg=msg + 'True 1 ' + str(left) +' '+ str(bottom) +' '+ str(right) +' '+ str(top)+'\n'
         file = open(resultpath +'\\'+ imagename +'.txt', 'w')
         file.write(msg)
         #debugger.show_all_imgs(pause=self.pause)
